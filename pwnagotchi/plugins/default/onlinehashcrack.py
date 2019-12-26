@@ -39,6 +39,9 @@ class OnlineHashCrack(plugins.Plugin):
         # remove special characters from whitelist APs to match on-disk format
         self.options['whitelist'] = set(map(lambda x: re.sub(r'[^a-zA-Z0-9]', '', x), self.options['whitelist']))
 
+        if 'face' not in self.options:
+            self.options['face'] = '(>‿‿>)'
+
         self.ready = True
         logging.info("OHC: OnlineHashCrack plugin loaded.")
 
@@ -115,6 +118,7 @@ class OnlineHashCrack(plugins.Plugin):
                     logging.info("OHC: Internet connectivity detected. Uploading new handshakes to onlinehashcrack.com")
 
                     for idx, handshake in enumerate(handshake_new):
+                        display.set('face', self.options['face'])
                         display.set('status',
                                     f"Uploading handshake to onlinehashcrack.com ({idx + 1}/{len(handshake_new)})")
                         display.update(force=True)
